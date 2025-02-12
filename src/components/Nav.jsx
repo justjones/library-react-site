@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LibraryLogo from '../assets/Library.svg';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from 'react-router-dom';
 
 const Nav = () => {
     function openMenu() {
@@ -21,7 +21,7 @@ const Nav = () => {
                 </Link>
                 <ul className="nav__links">
                     <li className="nav__list">
-                        <Link to="/home" className='nav__link'>
+                        <Link to="/" className='nav__link'>
                             Home
                         </Link>
                     </li>
