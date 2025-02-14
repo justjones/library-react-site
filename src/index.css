@@ -78,6 +78,7 @@ button:active {
 .btn {
   background-color: #7342d6;
   color: white;
+  margin-top: 18px;
   padding: 12px 24px;
   font-size: 20px;
   border-radius: 4px;
