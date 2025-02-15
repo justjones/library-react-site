@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Rating from "../components/ui/Rating";
 import Price from "../components/Price";
@@ -8,19 +8,22 @@ import Book from "../components/ui/Book";
 
 
 
-const BookInfo = ({ books, addToCart }) => {
+
+const BookInfo = ({ books, addToCart, cart }) => {
+
     const { id } = useParams();
-    const book = books.find(book => +book.id === +id);
-    
-    
+    const book = books.find((book) => +book.id === +id);
+
+    if (!book) {
+        return <div>Book not found</div>;
+    }
     function addBookToCart(book) {
-        addToCart(book)
+        addToCart(book);
+    }
+    function bookExistOnCart() {
+        return cart.find((cartBook) => cartBook.id === +id);
     }
 
-    function bookExistOnCart() {
-       
-        return cart.find(book => book.id === +id );
-    }
 
     return (
         <div id="books__body">
@@ -32,7 +35,7 @@ const BookInfo = ({ books, addToCart }) => {
                                 <FontAwesomeIcon icon='arrow-left' />
                             </Link>
                             <Link to='/books' className='book__link'>
-                            <h2 className="book__selected--title--top">Books</h2>
+                                <h2 className="book__selected--title--top">Books</h2>
                             </Link>
                         </div>
                         <div className="book__selected">
@@ -45,7 +48,7 @@ const BookInfo = ({ books, addToCart }) => {
                                 </h2>
                                 <Rating rating={book.rating} />
                                 <div className="book__selected--price">
-                                    <Price originalPrice={book.originalPrice} salePrice={book.salePrice}/>
+                                    <Price originalPrice={book.originalPrice} salePrice={book.salePrice} />
                                 </div>
                                 <h3 className="book__summary--title">
                                     Summary
@@ -57,14 +60,14 @@ const BookInfo = ({ books, addToCart }) => {
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, eligendi maxime possimus quibusdam ipsa, temporibus deserunt dignissimos ad magni animi voluptatem dicta! Odio nulla dolorum, eos cumque rem laborum hic.
                                 </p>
                                 {bookExistOnCart() ? (
-                                     <Link to={`/cart`} className="book__link">
-                                    <button className="btn">Checkout</button> 
-                                    </Link>                               
+                                    <Link to={`/cart`} className="book__link">
+                                        <button className="btn">Checkout</button>
+                                    </Link>
                                 ) : (<button className="btn" onClick={() => addBookToCart(book)}>Add to Cart</button>
                                 )}
-                                
+
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -76,12 +79,12 @@ const BookInfo = ({ books, addToCart }) => {
                             </h2>
                         </div>
                         <div className="books">
-                        {books
-                        .filter((book) => book.rating === 5 && +book.id !== +id)
-                        .slice(0, 4)
-                        .map((book) => (
-                            <Book book={book} key={book.id}/>
-                        ))}
+                            {books
+                                .filter((book) => book.rating === 5 && +book.id !== +id)
+                                .slice(0, 4)
+                                .map((book) => (
+                                    <Book book={book} key={book.id} />
+                                ))}
                         </div>
                     </div>
                 </div>
